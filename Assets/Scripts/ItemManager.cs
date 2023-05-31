@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : ItemBase
 {
-    [SerializeField] public int _itemId;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +19,22 @@ public class ItemManager : MonoBehaviour
     {
         Destroy(gameObject);
         return _itemId;
+    }
+
+    public override void Use()
+    {
+        if(base._state == Action.Poweeeeeer)
+        {
+             
+        }
+        else if(base._state == Action.Defence)
+        {
+            
+        }
+        else
+        {
+            
+
+        }
     }
 }

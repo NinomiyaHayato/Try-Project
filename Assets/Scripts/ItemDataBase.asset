@@ -15,3 +15,7 @@ MonoBehaviour:
   _itemList:
   - _item: {fileID: 3564414821560035551, guid: ca139a5331585814bb37df6aa7f73ec5, type: 3}
     _itemEffect: "\u305F\u3060\u306E\u7BB1"
+    _itemCount: 0
+  - _item: {fileID: 6160802620893337560, guid: dd8d54bf803e3314d8849fbca7b2ce19, type: 3}
+    _itemEffect: "\u305F\u3060\u306E\u7403\u4F53"
+    _itemCount: 0

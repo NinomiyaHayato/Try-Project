@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody _rb;
-    [SerializeField] float _moveSpeed;
-    [SerializeField] float _jumpPower;
+    [SerializeField]public  float _moveSpeed;
+    [SerializeField]public float _jumpPower;
     // Start is called before the first frame update
     void Start()
     {

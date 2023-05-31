@@ -6,4 +6,5 @@ public class PocketItem
 {
     public GameObject _item;
     public string _itemEffect;
+    public int _itemCount;
 }

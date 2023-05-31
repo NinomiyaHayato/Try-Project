@@ -5,7 +5,8 @@ using UnityEngine;
 public class PocketManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> _ItemList;
-    ItemDataBase _itemDataBase;
+    [SerializeField] List<int> _itemIdList;
+    public ItemDataBase _itemDataBase;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class PocketManager : MonoBehaviour
         {
             ItemManager _itemManager = collision.gameObject.GetComponent<ItemManager>();
 
-            if(_itemManager.PickUp() != 0)
+            if(_itemManager.PickUp() != _itemDataBase._itemList.Count)
             {
                 AddPocket(_itemManager.PickUp());
             }
@@ -31,7 +32,22 @@ public class PocketManager : MonoBehaviour
     }
     public void AddPocket(int itemId)
     {
-        var itemPrehub = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
-        _ItemList.Add(itemPrehub);
+        if(_itemIdList.Contains(itemId))
+        {
+            var itemprehub = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
+            _ItemList.Add(itemprehub);
+            itemprehub.transform.localPosition = new Vector3(0, 0, 0);
+            _itemDataBase._itemList[itemId]._itemCount += 1;
+            itemprehub.SetActive(false);
+        }
+        else
+        {
+            var itemPrehub = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
+            _ItemList.Add(itemPrehub);
+            _itemIdList.Add(itemId);
+            itemPrehub.transform.localPosition = new Vector3(0, 0, 0);
+            _itemDataBase._itemList[itemId]._itemCount += 1;
+            itemPrehub.SetActive(false);
+        }
     }
 }
