@@ -20,14 +20,13 @@ public class ItemManager : ItemBase
         Destroy(gameObject);
         return _itemId;
     }
-
     public override void Use()
     {
-        if(base._state == Action.Poweeeeeer)
+        if(base._state == Action.Heal)
         {
-             
+            
         }
-        else if(base._state == Action.Defence)
+        else if(base._state == Action.Poweeeeeer)
         {
             
         }

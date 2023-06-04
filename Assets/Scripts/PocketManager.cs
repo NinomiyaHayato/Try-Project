@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PocketManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> _ItemList;
-    [SerializeField] List<int> _itemIdList;
+    [SerializeField]public  List<GameObject> _ItemList;
+    [SerializeField]public List<int> _itemIdList;
     public ItemDataBase _itemDataBase;
     // Start is called before the first frame update
     void Start()
