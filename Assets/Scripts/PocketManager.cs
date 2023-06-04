@@ -7,10 +7,12 @@ public class PocketManager : MonoBehaviour
     [SerializeField]public  List<GameObject> _ItemList;
     [SerializeField]public List<int> _itemIdList;
     public ItemDataBase _itemDataBase;
+
+    ItemSlots _itemSlots;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _itemSlots = GameObject.FindObjectOfType<ItemSlots>();
     }
 
     // Update is called once per frame
@@ -47,6 +49,14 @@ public class PocketManager : MonoBehaviour
             _itemIdList.Add(itemId);
             itemPrehub.transform.localPosition = new Vector3(0, 0, 0);
             _itemDataBase._itemList[itemId]._itemCount += 1;
+            if (_ItemList.Count == 1)
+            {
+                _itemSlots.FirstSet(itemId);
+            }
+            else
+            {
+                _itemSlots.Set(itemId);
+            }
             itemPrehub.SetActive(false);
         }
     }
