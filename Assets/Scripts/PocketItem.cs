@@ -5,8 +5,10 @@ using UnityEngine.UI;
 [Serializable]
 public class PocketItem
 {
+    public int _itemID;
     public GameObject _item;
     public string _itemEffect;
     public int _itemCount;
     public Sprite _itemImage;
+    public Action _effect;
 }

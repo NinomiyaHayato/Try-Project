@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     [SerializeField]public  float _moveSpeed;
     [SerializeField]public float _jumpPower;
+    [SerializeField] public int _hp;
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _hp = 50;
     }
 
     // Update is called once per frame

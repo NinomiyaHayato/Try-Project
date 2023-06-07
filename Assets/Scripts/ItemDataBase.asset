@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: ItemDataBase
   m_EditorClassIdentifier: 
   _itemList:
-  - _item: {fileID: 3564414821560035551, guid: ca139a5331585814bb37df6aa7f73ec5, type: 3}
+  - _itemID: 0
+    _item: {fileID: 3564414821560035551, guid: ca139a5331585814bb37df6aa7f73ec5, type: 3}
     _itemEffect: "\u305F\u3060\u306E\u7BB1"
     _itemCount: 0
-  - _item: {fileID: 6160802620893337560, guid: dd8d54bf803e3314d8849fbca7b2ce19, type: 3}
+    _itemImage: {fileID: 21300000, guid: 794f78d05f4c49e418554800231c68b0, type: 3}
+  - _itemID: 1
+    _item: {fileID: 6160802620893337560, guid: dd8d54bf803e3314d8849fbca7b2ce19, type: 3}
     _itemEffect: "\u305F\u3060\u306E\u7403\u4F53"
     _itemCount: 0
+    _itemImage: {fileID: 21300000, guid: f2d5d729f094d8345ba1a3e44094483c, type: 3}
+  - _itemID: 2
+    _item: {fileID: 1722337822614218888, guid: 4b59da6bbcae4774ca2dd5ebba1e1b0a, type: 3}
+    _itemEffect: "\u305F\u3060\u306E\u5186\u67F1"
+    _itemCount: 0
+    _itemImage: {fileID: 21300000, guid: 9dcd2519417b5034d9fbd14b09834e29, type: 3}

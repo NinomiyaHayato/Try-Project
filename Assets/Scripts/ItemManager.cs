@@ -24,16 +24,15 @@ public class ItemManager : ItemBase
     {
         if(base._state == Action.Heal)
         {
-            
+            Debug.Log("Heal");
         }
         else if(base._state == Action.Poweeeeeer)
         {
-            
+            Debug.Log("Poweeeeeer");
         }
         else
         {
-            
-
+            Debug.Log("Deffence");
         }
     }
 }

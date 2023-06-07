@@ -11,6 +11,8 @@ public class ItemSlots : MonoBehaviour
     [SerializeField]Image _image;
     public ItemDataBase _itemDataBase;
     [SerializeField] Text _text;
+
+    public List<PocketItem> _pocketItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,27 +31,55 @@ public class ItemSlots : MonoBehaviour
     public void RightChange()
     {
         _nowItem++;
-        _image.sprite = _itemSprite[_nowItem % _itemSprite.Count];
-        _text.text = $"{_itemDataBase._itemList[_nowItem % _itemSprite.Count]._itemCount}ŒÂ";
+        //_image.sprite = _itemSprite[_nowItem % _itemSprite.Count];
+        //_text.text = $"{_itemDataBase._itemList[_nowItem % _itemSprite.Count]._itemCount}ŒÂ";
+        _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
+        _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}ŒÂ";
     }
     public void LeftChange()
     {
         if(_nowItem > 0)
         {
             _nowItem--;
-            _image.sprite = _itemSprite[_nowItem % _itemSprite.Count];
-            _text.text = $"{_itemDataBase._itemList[_nowItem % _itemSprite.Count]._itemCount}ŒÂ";
+            _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
+            _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}ŒÂ";
         }
     }
+
+    //public void SetItem(int itemID)
+    //{
+    //    foreach(var item in _pocketItem)
+    //    {
+    //        if(item._itemID == itemID)
+    //        {
+    //            item._itemCount++;
+    //        }
+    //    }
+    //}
     public void FirstSet(int itemid)
     {
-        _itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
-        _image.sprite = _itemSprite[0];
+        //_itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
+        _pocketItem.Add(_itemDataBase._itemList[itemid]);
+        //_image.sprite = _itemSprite[0];
+        _image.sprite = _pocketItem[0]._itemImage;
         _nowItem = 0;
         _text.text = $"{_itemDataBase._itemList[itemid]._itemCount}ŒÂ";
+        _pocketItem[_pocketItem.Count - 1]._effect += FindObjectOfType<ItemManager>().Use;
     }
     public void Set(int itemid)
     {
-        _itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
+        //_itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
+        //_pocketItem.Add(_itemDataBase._itemList[itemid]);
+        foreach (var item in _pocketItem)
+        {
+            if (item._itemID == itemid)
+            {
+                item._itemCount++;
+            }
+        }
+    }
+    public void UseItem()
+    {
+        _pocketItem[_nowItem % _pocketItem.Count]._effect();
     }
 }

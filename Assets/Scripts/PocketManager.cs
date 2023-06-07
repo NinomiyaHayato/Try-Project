@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PocketManager : MonoBehaviour
 {
-    [SerializeField]public  List<GameObject> _ItemList;
-    [SerializeField]public List<int> _itemIdList;
+    [SerializeField] public List<GameObject> _ItemList;
+    [SerializeField] public List<int> _itemIdList;
     public ItemDataBase _itemDataBase;
 
     ItemSlots _itemSlots;
@@ -18,46 +17,36 @@ public class PocketManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Item")
+        if (collision.gameObject.tag == "Item")
         {
-            ItemManager _itemManager = collision.gameObject.GetComponent<ItemManager>();
+            ItemManager itemManager = collision.gameObject.GetComponent<ItemManager>();
 
-            if(_itemManager.PickUp() != _itemDataBase._itemList.Count)
+            if (itemManager.PickUp() != _itemDataBase._itemList.Count)
             {
-                AddPocket(_itemManager.PickUp());
+                AddPocket(itemManager.PickUp());
             }
         }
     }
     public void AddPocket(int itemId)
     {
-        if(_itemIdList.Contains(itemId))
+        var itemPrefab = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
+        _ItemList.Add(itemPrefab);
+        itemPrefab.transform.localPosition = new Vector3(0, 0, 0);
+        if (_itemIdList.Contains(itemId))
         {
-            var itemprehub = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
-            _ItemList.Add(itemprehub);
-            itemprehub.transform.localPosition = new Vector3(0, 0, 0);
-            _itemDataBase._itemList[itemId]._itemCount += 1;
-            itemprehub.SetActive(false);
+            //_itemDataBase._itemList[itemId]._itemCount += 1;
+            _itemSlots.Set(itemId);
         }
         else
         {
-            var itemPrehub = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
-            _ItemList.Add(itemPrehub);
-            _itemIdList.Add(itemId);
-            itemPrehub.transform.localPosition = new Vector3(0, 0, 0);
             _itemDataBase._itemList[itemId]._itemCount += 1;
-            if (_ItemList.Count == 1)
-            {
-                _itemSlots.FirstSet(itemId);
-            }
-            else
-            {
-                _itemSlots.Set(itemId);
-            }
-            itemPrehub.SetActive(false);
+            _itemIdList.Add(itemId);
+            _itemSlots.FirstSet(itemId);
         }
+        itemPrefab.SetActive(false);
     }
 }
