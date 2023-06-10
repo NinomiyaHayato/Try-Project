@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PocketManager : MonoBehaviour
 {
-    [SerializeField] public List<GameObject> _ItemList;
-    [SerializeField] public List<int> _itemIdList;
+    //[SerializeField] public List<GameObject> _ItemList;
+    [SerializeField] public List<int> _itemIdList;　//アイテムのIDを格納する
     public ItemDataBase _itemDataBase;
 
     ItemSlots _itemSlots;
@@ -19,7 +19,7 @@ public class PocketManager : MonoBehaviour
     {
 
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)　//アイテム取得時に呼ばれます
     {
         if (collision.gameObject.tag == "Item")
         {
@@ -31,14 +31,11 @@ public class PocketManager : MonoBehaviour
             }
         }
     }
-    public void AddPocket(int itemId)
+    public void AddPocket(int itemId) //アイテムを追加する関数
     {
         var itemPrefab = Instantiate(_itemDataBase._itemList[itemId]._item, this.gameObject.transform);
-        _ItemList.Add(itemPrefab);
-        itemPrefab.transform.localPosition = new Vector3(0, 0, 0);
         if (_itemIdList.Contains(itemId))
         {
-            //_itemDataBase._itemList[itemId]._itemCount += 1;
             _itemSlots.Set(itemId);
         }
         else

@@ -5,10 +5,10 @@ using UnityEngine.UI;
 [Serializable]
 public class PocketItem
 {
-    public int _itemID;
-    public GameObject _item;
-    public string _itemEffect;
-    public int _itemCount;
-    public Sprite _itemImage;
-    public Action _effect;
+    public int _itemID; //アイテムのID
+    public GameObject _item; // アイテムのPrefab
+    public string _itemEffect; // どんな効果があるか
+    public int _itemCount; // 現在の所持数
+    public Sprite _itemImage; // アイテムSlotに表示するためのimage
+    public Action _effect; // そのアイテムがどんな効果があるか
 }

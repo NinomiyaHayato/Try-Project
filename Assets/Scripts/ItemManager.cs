@@ -15,12 +15,12 @@ public class ItemManager : ItemBase
     {
         
     }
-    public int PickUp()
+    public int PickUp() //アイテム取得時にアイテムのIDを返す
     {
         Destroy(gameObject);
         return _itemId;
     }
-    public override void Use()
+    public override void Use() //アイテムを使い分ける関数(自由に効果をつけてください　↓↓
     {
         if(base._state == Action.Heal)
         {

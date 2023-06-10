@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +7,15 @@ public class ItemSlots : MonoBehaviour
     [SerializeField, Header("現在所有しているアイテムを格納")] public List<Sprite> _itemSprite;
     [SerializeField, Header("余剰計算のための数字")] public int _nowItem;
 
-    [SerializeField]Image _image;
+    [SerializeField] Image _image;　// アイテムのimage
     public ItemDataBase _itemDataBase;
-    [SerializeField] Text _text;
+    [SerializeField] Text _text; //アイテムの個数を表示
 
     public List<PocketItem> _pocketItem;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,52 +23,37 @@ public class ItemSlots : MonoBehaviour
     {
 
     }
-    public void Sort()
+    public void RightChange()　//アイテムを右に切り替える(Bottunにつける
     {
-        var poketItemList = FindObjectOfType<PocketManager>()._ItemList;
-    }
-    public void RightChange()
-    {
-        _nowItem++;
-        //_image.sprite = _itemSprite[_nowItem % _itemSprite.Count];
-        //_text.text = $"{_itemDataBase._itemList[_nowItem % _itemSprite.Count]._itemCount}個";
-        _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
-        _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}個";
-    }
-    public void LeftChange()
-    {
-        if(_nowItem > 0)
+        if (_pocketItem.Count != 0)
         {
-            _nowItem--;
+            _nowItem++;
             _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
             _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}個";
         }
     }
-
-    //public void SetItem(int itemID)
-    //{
-    //    foreach(var item in _pocketItem)
-    //    {
-    //        if(item._itemID == itemID)
-    //        {
-    //            item._itemCount++;
-    //        }
-    //    }
-    //}
-    public void FirstSet(int itemid)
+    public void LeftChange()　//アイテムを左に切り替える(Buttonにつける
     {
-        //_itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
+        if (_nowItem > 0)
+        {
+            if (_pocketItem.Count != 0)
+            {
+                _nowItem--;
+                _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
+                _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}個";
+            }
+        }
+    }
+    public void FirstSet(int itemid)　//未所持アイテムをSlot内にSetする
+    {
         _pocketItem.Add(_itemDataBase._itemList[itemid]);
-        //_image.sprite = _itemSprite[0];
         _image.sprite = _pocketItem[0]._itemImage;
         _nowItem = 0;
         _text.text = $"{_itemDataBase._itemList[itemid]._itemCount}個";
         _pocketItem[_pocketItem.Count - 1]._effect += FindObjectOfType<ItemManager>().Use;
     }
-    public void Set(int itemid)
+    public void Set(int itemid)　//既に持っているアイテムだった場合個数を1増やす
     {
-        //_itemSprite.Add(_itemDataBase._itemList[itemid]._itemImage);
-        //_pocketItem.Add(_itemDataBase._itemList[itemid]);
         foreach (var item in _pocketItem)
         {
             if (item._itemID == itemid)
@@ -78,8 +62,31 @@ public class ItemSlots : MonoBehaviour
             }
         }
     }
-    public void UseItem()
+    public void UseItem() //アイテムの使用(slotを切り替える等の処理
     {
-        _pocketItem[_nowItem % _pocketItem.Count]._effect();
+        if (_pocketItem.Count != 0)
+        {
+            _pocketItem[_nowItem % _pocketItem.Count]._effect();
+            _pocketItem[_nowItem % _pocketItem.Count]._itemCount -= 1;
+            if (_pocketItem[_nowItem % _pocketItem.Count]._itemCount == 0)
+            {
+                FindObjectOfType<PocketManager>()._itemIdList.RemoveAt(_nowItem % _pocketItem.Count);
+                _pocketItem.RemoveAt(_nowItem % _pocketItem.Count);
+                _nowItem = 0;
+                if(_pocketItem.Count != 0)
+                {
+                    _image.sprite = _pocketItem[_nowItem % _pocketItem.Count]._itemImage;
+                }
+            }
+            if(_pocketItem.Count != 0)
+            {
+                _text.text = $"{_pocketItem[_nowItem % _pocketItem.Count]._itemCount}個";
+            }
+        }
+        if(_pocketItem.Count == 0)
+        {
+            _image.sprite = null;
+            _text.text = "0個";
+        }
     }
 }
