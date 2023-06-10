@@ -1,35 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    float _v; //vertical
+    float _h; //holizontal
+    Vector3 _dir;
+    Quaternion _playerRotation;
     Rigidbody _rb;
-    [SerializeField]public  float _moveSpeed;
-    [SerializeField]public float _jumpPower;
+    [SerializeField] public float _moveSpeed;
+    [SerializeField] public float _jumpPower;
     [SerializeField] public int _hp;
+    Animator _anim;
+    private void Awake()
+    {
+        _playerRotation = transform.rotation;
+    }
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _hp = 50;
+        _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         float y = _rb.velocity.y;
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             y = _jumpPower;
             _rb.velocity = Vector3.up * _jumpPower;
         }
+        Animation();
     }
     private void FixedUpdate()
     {
-        float v = Input.GetAxisRaw("Vertical");
-        float h = Input.GetAxisRaw("Horizontal");
-        Vector3 dir = Vector3.forward * h + Vector3.left * v;
-        _rb.velocity = dir * _moveSpeed + _rb.velocity.y * Vector3.up;
+        _v = Input.GetAxisRaw("Vertical");
+        _h = Input.GetAxisRaw("Horizontal");
+        _dir = Vector3.forward * _v + Vector3.right * _h;
+        var holizntalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
+        _rb.velocity = holizntalRotation * _dir * _moveSpeed + _rb.velocity.y * Vector3.up;
+        var rotationSpeed = 600 * Time.deltaTime;
+        _playerRotation = Quaternion.LookRotation(Camera.main.transform.forward, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _playerRotation, rotationSpeed);
+        //‘æ1ˆø”‚Ìquaternion‚©‚ç‘æ2ˆø”‚Ìquaternion‚ÉŒü‚©‚Á‚½‰ñ“]‚ð•Ô‚·A‘æ3ˆø”‚É‚ÍÅ‘å‚Ì‰ñ“]Šp“x‚ðŽw’è‚Å‚«‚Ü‚·B
+    }
+    public void Animation()
+    {
+        if(_dir.magnitude > 0.1f)
+        {
+            _anim.SetFloat("Speed", _dir.magnitude);
+        }
+        else
+        {
+            _anim.SetFloat("Speed", 0);
+        }
+        if(Input.GetButton("Fire2"))
+        {
+            _anim.SetTrigger("Attack");
+        }
     }
 }
