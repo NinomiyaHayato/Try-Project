@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float _jumpPower;
     [SerializeField] public int _hp;
     Animator _anim;
+
+    [SerializeField]public int _money;//アイテム引き換え用
     private void Awake()
     {
         _playerRotation = transform.rotation;
@@ -59,5 +61,17 @@ public class PlayerController : MonoBehaviour
         {
             _anim.SetTrigger("Attack");
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Shop")
+        {
+            ItemShop itemShop = FindObjectOfType<ItemShop>();
+            itemShop.GetComponent<ItemShop>().ItemsShop();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }

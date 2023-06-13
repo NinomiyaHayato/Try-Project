@@ -61,6 +61,7 @@ public class ItemSlots : MonoBehaviour
                 item._itemCount++;
             }
         }
+        _text.text = $"{_itemDataBase._itemList[itemid]._itemCount}個";
     }
     public void UseItem() //アイテムの使用(slotを切り替える等の処理
     {
