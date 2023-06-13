@@ -7,12 +7,13 @@ public class PlayerController : MonoBehaviour
     Vector3 _dir;
     Quaternion _playerRotation;
     Rigidbody _rb;
-    [SerializeField] public float _moveSpeed;
-    [SerializeField] public float _jumpPower;
-    [SerializeField] public int _hp;
+    [SerializeField,Header("移動速度")] public float _moveSpeed;
+    [SerializeField,Header("jumpする力")] public float _jumpPower;
+    [SerializeField,Header("Playerのhp")] public int _hp;
     Animator _anim;
-
-    [SerializeField]public int _money;//アイテム引き換え用
+    [SerializeField,Header("shopで使うGold")]public int _money;//アイテム引き換え用
+    [SerializeField] GameObject _shop;//shopです
+    GameManager _gameManager;
     private void Awake()
     {
         _playerRotation = transform.rotation;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
+        _gameManager = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -66,12 +68,21 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == "Shop")
         {
+            _shop.SetActive(true);
             ItemShop itemShop = FindObjectOfType<ItemShop>();
             itemShop.GetComponent<ItemShop>().ItemsShop();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        
+        _shop.SetActive(false);
+    }
+    private void OnCollisionEnter(Collision collision) //テスト
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            _hp -= 10;
+            _gameManager.PlayerHp(_hp);
+        }
     }
 }

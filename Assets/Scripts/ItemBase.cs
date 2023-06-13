@@ -12,14 +12,10 @@ public abstract class ItemBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public abstract void Use();
 
     public enum Action
