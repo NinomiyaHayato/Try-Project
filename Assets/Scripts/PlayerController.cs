@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _v = Input.GetAxisRaw("Vertical");
+        _h = Input.GetAxisRaw("Horizontal");
         float y = _rb.velocity.y;
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -39,14 +41,17 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        _v = Input.GetAxisRaw("Vertical");
-        _h = Input.GetAxisRaw("Horizontal");
         _dir = Vector3.forward * _v + Vector3.right * _h;
-        var holizntalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
-        _rb.velocity = holizntalRotation * _dir * _moveSpeed + _rb.velocity.y * Vector3.up;
-        var rotationSpeed = 600 * Time.deltaTime;
-        _playerRotation = Quaternion.LookRotation(Camera.main.transform.forward, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _playerRotation, rotationSpeed);
+        _dir = Camera.main.transform.TransformDirection(_dir);
+        _dir.y = 0;
+        if (_h != 0 || _v != 0)
+        {
+            transform.forward = _dir;
+        }
+        _rb.velocity = _dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
+        //var rotationSpeed = 600 * Time.deltaTime;
+        //_playerRotation = Quaternion.LookRotation(Camera.main.transform.forward, Vector3.up);
+        //transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _playerRotation, rotationSpeed);
         //‘æ1ˆø”‚Ìquaternion‚©‚ç‘æ2ˆø”‚Ìquaternion‚ÉŒü‚©‚Á‚½‰ñ“]‚ğ•Ô‚·A‘æ3ˆø”‚É‚ÍÅ‘å‚Ì‰ñ“]Šp“x‚ğw’è‚Å‚«‚Ü‚·B
     }
     public void Animation()

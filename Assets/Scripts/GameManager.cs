@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         _hpSlider.value = 1;
         _playerController = GameObject.FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
         _maxhp = _playerController._hp;
-        _goldText.text = $"ŠGold : {_playerController._money}";
+        _goldText.text = $"ŠGold : {_playerController._money}G";
     }
 
     // Update is called once per frame
