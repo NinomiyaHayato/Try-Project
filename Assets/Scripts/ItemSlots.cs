@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ItemSlots : MonoBehaviour
 {
@@ -12,17 +13,6 @@ public class ItemSlots : MonoBehaviour
     [SerializeField] Text _text; //アイテムの個数を表示
 
     public List<PocketItem> _pocketItem;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void RightChange()　//アイテムを右に切り替える(Bottunにつける
     {
         if (_pocketItem.Count != 0)
@@ -67,6 +57,7 @@ public class ItemSlots : MonoBehaviour
     {
         if (_pocketItem.Count != 0)
         {
+            StartCoroutine("HealEffect");
             _pocketItem[_nowItem % _pocketItem.Count]._effect();
             _pocketItem[_nowItem % _pocketItem.Count]._itemCount -= 1;
             if (_pocketItem[_nowItem % _pocketItem.Count]._itemCount == 0)
@@ -89,5 +80,12 @@ public class ItemSlots : MonoBehaviour
             _image.sprite = null;
             _text.text = "0個";
         }
+    }
+    IEnumerator HealEffect() //コルーチンでのパーティクル
+    {
+        GameObject heal = GameObject.FindObjectOfType<PlayerController>().GetComponent<PlayerController>()._healMotion;
+        heal.SetActive(true);
+        yield return new WaitForSeconds(1.2f);
+        heal.SetActive(false);
     }
 }

@@ -24,5 +24,4 @@ public abstract class ItemBase : MonoBehaviour
         Poweeeeeer,
         Defence,
     }
-
 }

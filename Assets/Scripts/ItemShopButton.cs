@@ -14,15 +14,14 @@ public class ItemShopButton : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        GetComponentInChildren<Text>().text = $"{_itemBase._itemList[_id]._itemName}";
+        GetComponentInChildren<Text>().text = $"{_itemBase._itemList[_id]._itemName}/{_itemBase._itemList[_id]._cost}G";
     }
-    public void Buy(int cost)
+    public void Buy(int cost) //ÉAÉCÉeÉÄÇÃçwì¸
     {
         var player = GameObject.FindObjectOfType<PlayerController>();
         cost = _buyCost;
         if (player._money >= cost)
         {
-            var playerPos = player.transform;
             GameObject.FindObjectOfType<PocketManager>().AddPocket(_id);
             player._money -= _buyCost;
             FindObjectOfType<GameManager>().Money(player._money);

@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     GameManager _gameManager;
     [SerializeField, Header("当たり判定")] GameObject _attackCollider;
     Vector3 _firstPosition;
+    [SerializeField, Header("healのeffect")]public GameObject _healMotion;
     private void Awake()
     {
         _playerRotation = transform.rotation;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
         }
         _rb.velocity = _dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
     }
-    public void Animation()
+    public void Animation()　//PlayerのAnimation
     {
         if(_dir.magnitude > 0.1f)
         {
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine("AttackCollider");
         }
     }
-    public void Damage(int damage)
+    public void Damage(int damage) //Playerのリスポーン及びダメージ
     {
         _hp -= damage;
         if(_hp <= 0)
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
             _hp = 100;
         }
     }
-    public void MoneyGet(int money)
+    public void MoneyGet(int money)　//敵を倒したときのコイン獲得
     {
         _gameManager.Money(_money += money);
     }

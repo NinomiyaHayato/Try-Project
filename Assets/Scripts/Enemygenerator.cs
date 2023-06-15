@@ -24,7 +24,7 @@ public class Enemygenerator : MonoBehaviour
     {
         Respawn();
     }
-    public void Respawn()
+    public void Respawn() //ザコ敵のリスポーン
     {
         _time += Time.deltaTime;
         if (_time > _limitTime && FindObjectsOfType<EnemyMove>().Length < 30)

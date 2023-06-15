@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ItemManager : ItemBase
@@ -44,7 +45,8 @@ public class ItemManager : ItemBase
         }
         else
         {
-            Debug.Log("Deffence");
+            PlayerController playerController = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
+            playerController._moveSpeed += 1;
         }
     }
 }
