@@ -27,6 +27,6 @@ public class GameManager : MonoBehaviour
     }
     public void Money(int money)
     {
-        _goldText.text = $"ŠGold : {money}";
+        _goldText.text = $"ŠGold : {money}G";
     }
 }

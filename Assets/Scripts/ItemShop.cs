@@ -9,7 +9,7 @@ public class ItemShop : MonoBehaviour
     {
 
     }
-    public void ItemsShop()@//palyer‚ÅŒÄ‚Ô
+    public void ItemsShop()@//player‚ÅŒÄ‚Ô
     {
         if (gameObject.transform.childCount < _itemBase._itemList.Count)
         {
