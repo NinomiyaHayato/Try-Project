@@ -39,7 +39,8 @@ public class ItemManager : ItemBase
         }
         else if (base._state == Action.Poweeeeeer)
         {
-            Debug.Log("Poweeeeeer");
+            PlayerController playerController = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
+            playerController._attackPower += 1;
         }
         else
         {

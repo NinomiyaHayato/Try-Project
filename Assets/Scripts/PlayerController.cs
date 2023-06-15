@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField,Header("移動速度")] public float _moveSpeed;
     [SerializeField,Header("jumpする力")] public float _jumpPower;
     [SerializeField,Header("Playerのhp")] public int _hp;
+    [SerializeField, Header("Playerの攻撃力")] public int _attackPower;
     Animator _anim;
     [SerializeField,Header("shopで使うGold")]public int _money;//アイテム引き換え用
     [SerializeField] GameObject _shop;//shopです
     GameManager _gameManager;
+    [SerializeField, Header("当たり判定")] GameObject _attackCollider;
+    Vector3 _firstPosition;
     private void Awake()
     {
         _playerRotation = transform.rotation;
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _gameManager = GameObject.FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        _firstPosition = this.transform.position;
     }
 
     // Update is called once per frame
@@ -49,10 +54,6 @@ public class PlayerController : MonoBehaviour
             transform.forward = _dir;
         }
         _rb.velocity = _dir.normalized * _moveSpeed + _rb.velocity.y * Vector3.up;
-        //var rotationSpeed = 600 * Time.deltaTime;
-        //_playerRotation = Quaternion.LookRotation(Camera.main.transform.forward, Vector3.up);
-        //transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _playerRotation, rotationSpeed);
-        //第1引数のquaternionから第2引数のquaternionに向かった回転を返す、第3引数には最大の回転角度を指定できます。
     }
     public void Animation()
     {
@@ -67,7 +68,21 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButton("Fire2"))
         {
             _anim.SetTrigger("Attack");
+            StartCoroutine("AttackCollider");
         }
+    }
+    public void Damage(int damage)
+    {
+        _hp -= damage;
+        if(_hp <= 0)
+        {
+            this.transform.position = _firstPosition;
+            _hp = 100;
+        }
+    }
+    public void MoneyGet(int money)
+    {
+        _gameManager.Money(_money += money);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -77,17 +92,27 @@ public class PlayerController : MonoBehaviour
             ItemShop itemShop = FindObjectOfType<ItemShop>();
             itemShop.GetComponent<ItemShop>().ItemsShop();
         }
+        if(other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<EnemyBase>().Damage(_attackPower);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         _shop.SetActive(false);
     }
-    private void OnCollisionEnter(Collision collision) //テスト
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Enemy")
         {
             _hp -= 10;
             _gameManager.PlayerHp(_hp);
         }
+    }
+    IEnumerator AttackCollider()
+    {
+        _attackCollider.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        _attackCollider.SetActive(false);
     }
 }

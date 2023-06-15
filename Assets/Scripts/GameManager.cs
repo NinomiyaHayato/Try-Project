@@ -21,12 +21,6 @@ public class GameManager : MonoBehaviour
         _maxhp = _playerController._hp;
         _goldText.text = $"èäéùGold : {_playerController._money}G";
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void PlayerHp(int nowHp)
     {
         _hpSlider.value = (float)nowHp / (float)_maxhp;

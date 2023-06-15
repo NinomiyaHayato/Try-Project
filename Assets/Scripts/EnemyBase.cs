@@ -2,19 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public  class EnemyBase : MonoBehaviour
 {
-    [SerializeField, Header("Enemy‚ÌHP")] int _hp;
-    [SerializeField, Header("Enemy‚ÌUŒ‚—Í")] int _attack;
+    [SerializeField, Header("Enemy‚ÌHP")] protected int _enemyHp;
+    [SerializeField, Header("Enemy‚ÌUŒ‚—Í")] public int _attack;
+    [SerializeField, Header("ˆÚ“®ƒXƒs[ƒh")] protected int _moveSpeed;
+    [SerializeField, Header("€‚ñ‚¾‚Æ‚«‚ÉŠl“¾‚·‚émoney")] protected int _deathMoney;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    public void Damage(int damage)
+    {
+        _enemyHp -= damage;
+        if(_enemyHp <= 0)
+        {
+            GameObject.FindObjectOfType<PlayerController>().MoneyGet(_deathMoney);
+            Destroy(this.gameObject);
+        }
     }
 }
