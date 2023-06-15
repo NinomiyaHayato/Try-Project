@@ -91,6 +91,9 @@ public class PlayerController : MonoBehaviour
             _shop.SetActive(true);
             ItemShop itemShop = FindObjectOfType<ItemShop>();
             itemShop.GetComponent<ItemShop>().ItemsShop();
+            //‰ï˜b‚Ì•\Ž¦(‰¼
+
+            GameObject.FindObjectOfType<NPCController>().Event();
         }
         if(other.gameObject.tag == "Enemy")
         {
