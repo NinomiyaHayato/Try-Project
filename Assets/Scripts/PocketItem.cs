@@ -12,5 +12,5 @@ public class PocketItem
     public int _itemCount; // 現在の所持数
     public Sprite _itemImage; // アイテムSlotに表示するためのimage
     public Action _effect; // そのアイテムがどんな効果があるか
-    public int _cost;
+    public int _cost; //買うためのコスト
 }

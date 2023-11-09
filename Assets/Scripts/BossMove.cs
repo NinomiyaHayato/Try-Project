@@ -5,7 +5,7 @@ public class BossMove : EnemyBase
 {
     Rigidbody _rb;
     Animator _anim;
-    [SerializeField, Header("巡回地点")] Transform[] _patrol;
+    [SerializeField, Header("巡回地点")] public Transform[] _patrol;
     int _patrolIndex = 0;
     [SerializeField, Header("巡回のターゲットに近づいた際の判断距離")] float _stopDistance;
     [SerializeField, Header("bossが近づくまでの距離")] float _stopDistance2;
